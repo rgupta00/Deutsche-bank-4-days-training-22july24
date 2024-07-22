@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="com.b.overloading_overriding.Shape"/>
+    <fullyQualifiedTypeName name="com.a.oo_basics.Employee"/>
+    <fullyQualifiedTypeName name="java.lang.Math"/>
+    <fullyQualifiedTypeName name="com.b.oo_adv.prob.Vehicle"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="com.b.oo_adv.prob.Bike"/>
+    <fullyQualifiedTypeName name="com.b.oo_adv.prob.Metro"/>
 </qualifiedTypeNameHistroy>
