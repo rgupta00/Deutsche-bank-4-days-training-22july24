@@ -1,8 +1,32 @@
 Day 1:
 ---------
-intro to the training
+intro to the training/ Course Outline
+
+trainee introduction
+
 trainer introduction
 
+https://www.linkedin.com/in/rajeevguptajavatrainer/
+https://www.youtube.com/@busycoderacademy
+
+
+Training Pack and Grads Project Link
+https://github.com/suryakantss/DBGrads
+
+
+pdf
+https://drive.google.com/drive/folders/1VIUUJ3DO42sU1sqjstpwmBKZebSujgKt?usp=sharing
+
+git hub
+https://github.com/rgupta00/Deutsche-bank-4-days-training-22july24
+
+required tools:
+--------------
+
+
+
+Day 1:
+----------
 oops
 interface abs class
 exception handling
@@ -11,6 +35,8 @@ debugging
 functional programming
 java 8 Lambdas and Streams
 intro to jdbc
+understanding project work
+
 
 
 some mcq:
@@ -82,6 +108,7 @@ destructors
 static data/method
 init block
 
+understanding abstraction and encapsulation
 
 relationship bw objects?
 
@@ -90,4 +117,22 @@ how to achive loose coupling?
 interface abs class
 
 overloading vs overriding
+
+String class
+inner classes intro
+
+Exception handing
+
+IO
+
+collection
+
+Java Threads
+
+Advance OOPs:
+-------------
+SOLID 
+GOF patterns
+
+
 
