@@ -1,4 +1,4 @@
-package com.f.abstraction.ex3;
+package com.f.abstraction.ex3.solution;
 
 public interface Payable {
 	public double payment();

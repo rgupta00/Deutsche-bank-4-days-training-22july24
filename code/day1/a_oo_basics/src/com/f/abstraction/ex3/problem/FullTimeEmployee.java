@@ -1,6 +1,6 @@
-package com.f.abstraction.ex3;
+package com.f.abstraction.ex3.problem;
 
-public class FullTimeEmployee extends Employee implements Payable{
+public class FullTimeEmployee extends Employee {
 
 	private double tax;
 	public FullTimeEmployee(int id, String name, double salary) {

@@ -1,4 +1,4 @@
-package com.f.abstraction.ex3;
+package com.f.abstraction.ex3.problem;
 
 public class Tester {
 
@@ -10,7 +10,7 @@ public class Tester {
 		Employee employee=new PartTimeEmployee(1, "amit", 3000, 23, 5600);
 		//System.out.println(employee);
 		
-		EmployeePaymentProceseingSystem.paymentProcessingSystem(employee);
+		PaymentProceseingSystem.paymentProcessingSystem(employee);
 	}
 
 }

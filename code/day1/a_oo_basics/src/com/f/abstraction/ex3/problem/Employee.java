@@ -1,6 +1,6 @@
-package com.f.abstraction.ex3;
+package com.f.abstraction.ex3.problem;
 
-abstract class Employee implements Payable{
+abstract class Employee{
 	
 	private int id;
 	private String name;
@@ -38,5 +38,6 @@ abstract class Employee implements Payable{
 		return builder.toString();
 	}
 	
+	abstract public double payment();
 	
 }

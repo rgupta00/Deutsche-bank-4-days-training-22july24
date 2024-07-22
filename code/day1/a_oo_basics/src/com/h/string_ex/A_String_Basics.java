@@ -5,13 +5,29 @@ import java.util.Random;
 
 public class A_String_Basics {
     public static void main(String[] args) {
-        //how string stored in merory, basics interview questions
+        
+    	String s1=new String("foo");
+    	
+    	String s2="foo";//better
+    	
+    	//String are immutable
+    	
+    	String m="raja";
+    	m=m+"baja";
+    	System.out.println(m);
+    	
+    	String s="a"+"b"+"c";// good or bad code? ==> bad code ?
+    	
+    	String data= new StringBuilder().append("a").append("b").append("c").toString();
+    	
+    	
+    	//how string stored in merory, basics interview questions
         //string vs string builder vs stringbuffer
 
 //        System.out.println(Runtime.getRuntime().availableProcessors());
 
 
-        String s="a"+"b"+"c";
+      //  String s="a"+"b"+"c";
         //vs
 
 //        String data= new StringBuilder().append("a").append("b").append("c").toString();
