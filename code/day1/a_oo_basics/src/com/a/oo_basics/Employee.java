@@ -1,44 +1,52 @@
 package com.a.oo_basics;
+
 //POJO
 public class Employee {
-    private int id;//instance varaible
-    private  String name;//instance varaible
-    private   double salary;//instance varaible
+	private int id;// instance varaible
+	private String name;// instance varaible
+	private double salary;// instance varaible
 
-    private static int counter=0;
+	//What is the relevance of static data?
+	// common to all objects
+	private static int counter = 0;//Singleton dp*
+	
+	//init block
+	//static init block
+	// ctr
 
-    //static vs normal (intstance method)
-    //to call the static method u dont need the object of Employee class
-    //static method dont have this ref (pointer)
+	//how to access static data outside the class
+	public static int getCounter() {
+		return counter;
+	}
+	public Employee(String name, double salary) {
+		this.id = ++counter;
+		this.name = name;
+		this.salary = salary;
+	}
 
-    public static int getCounter(){
-        return counter;
-    }
-    //ctr:
-    public Employee(){
-        this("foo",1000);
-    }
-    //para
-    public Employee( String name, double salary) {
-        //this();
-        this.id = ++counter;
-        this.name = name;
-        this.salary = salary;
-    }
-    //Copy ctr C++ and in java
-    public Employee(Employee employe) {
-        this.id = employe.id;
-        this.name = employe.name;
-        this.salary = employe.salary;
-    }
+	public Employee() {
+	}
 
-    public void printEmployee(){
-        System.out.println("id :"+ id +" name : "+ name+" salary: "+ salary);
-    }
+	// getter setters
 
+	public void show() {
+		System.out.println("id: " + id + "name: " + name + " salary: " + salary);
+	}
 
-     //i want to force user to call this method...
-     public double getTotalSalary(){
-          return  0.8*salary;
-     }
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public double getSalary() {
+		return salary;
+	}
+
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+
 }

@@ -2,18 +2,20 @@ package com.a.oo_basics;
 //What is init block?
 class Foo {
     //static init block
+	private static double myval;
     static {
+    	myval=Math.PI*3+9;
+    	
         System.out.println("static init block");
     }
     //init block
-    {
-        System.out.println(" common code 2");
-    }
-    {
-        System.out.println(" common code 1");
-    }
-
-
+	{
+		System.out.println(" common code 1");
+	}
+	{
+		System.out.println(" common code 2");
+	}
+	//DRY dont repeat yourself
     public Foo(){
         System.out.println("inside default ctr");
     }
@@ -25,16 +27,9 @@ class Foo {
 }
 public class C_static_block {
     public static void main(String[] args) {
-
-        //static class loading
+        
         Foo foo=new Foo();
-        //Dynamic class loading *
-
-
-        System.out.println("-------------");
-//        Foo foo=new Foo(3);
-//        Foo foo2=new Foo();
-
+        Foo foo2=new Foo(7);
 
     }
 }

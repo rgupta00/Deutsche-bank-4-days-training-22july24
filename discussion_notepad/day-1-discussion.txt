@@ -22,6 +22,24 @@ https://github.com/rgupta00/Deutsche-bank-4-days-training-22july24
 
 required tools:
 --------------
+vm software to be used in this training:
+
+jdk 17
+sts 4 ide(eclipse)
+maven build tools
+database: oracle/ mysql/ h2 database (in memory database)
+postman: tool to call ur rest api
+
+
+how to check the software setup?
+-------------------------------
+>java -version
+mvn
+then open sts
+sts : ide
+it will ask you for workspace ie collection of project
+then 
+i wnat to create the project
 
 
 
@@ -68,6 +86,8 @@ Note: No starting from 0 are octal, 0-7
 
 Q. What is the op?
 
+ upcasting vs downcasting
+ 
 	byte i=33;
 	byte j=22;
 	byte k=i+j;
@@ -84,7 +104,7 @@ Q. what is the op?
 
 
 
-Q. How to write a program to call main twice?
+Q. How to write a program to call main twice? Think?
 
 
 Q. how to execute comments?
@@ -99,18 +119,227 @@ Q. What is the op?
 
 Fundamental OOPs:
 ----------------
+
+coding conventions:
+
+name of class : BankEmployee
+
+					bankEmployeeId 
+					
+			constants: COMMON_TDS
+			
+			METHO:		
+			void myNetSalary(){
+			}
+			
 oops:
-classes
-object
-every object have: identity, state, behaviour
-constructor
-destructors
+-----------
+
+classes: cookie cutter, template to create the object
+object: example of class
+	ie does the actual work
+	
+	Trainer: class
+	Rajeev : object of trainer category
+	
+	every object have: identity, state, behaviour
+					 unique	--- data ---- methods
+					 
+	class:
+		data: instance variable/ static variable/ local variable
+		
+		methods:
+			mutator: change the state of the object
+			
+			setter
+			ctr
+			
+			
+			immutator: dont change the state of the object
+			getters*
+			
+constructor:
+	when a object is created before that
+	constructor is used to initilized instance variable
+	
+	
+Example:
+===================
+
+public class Employee {
+	private int id;// instance varaible
+	private String name;// instance varaible
+	private double salary;// instance varaible
+
+	//What is the relevance of static data?
+	// common to all objects
+	private static int counter = 0;//Singleton dp*
+	
+	//init block
+	//static init block
+	// ctr
+
+	//how to access static data outside the class
+	public static int getCounter() {
+		return counter;
+	}
+	public Employee(String name, double salary) {
+		this.id = ++counter;
+		this.name = name;
+		this.salary = salary;
+	}
+
+	public Employee() {
+	}
+
+	// getter setters
+
+	public void show() {
+		System.out.println("id: " + id + "name: " + name + " salary: " + salary);
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public double getSalary() {
+		return salary;
+	}
+
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+
+}
+
+
+
+public class Main {
+    public static void main(String[] args) {
+
+    	Employee employee=new Employee("raj",45000.00);
+
+    	
+    	System.out.println(employee.getId());
+    	employee.setSalary(employee.getSalary()+1000);
+    	employee.show();
+    	
+    	System.out.println(Employee.getCounter());
+    	
+//        Employee e1=new Employee("raj",5000);
+//        Employee e2=new Employee("raj",5000);
+//
+//        //static method can be called with the name of the class we dnot object
+      //  System.out.println(Employee.getCounter());
+
+    }
+}
+destructors: No, GC*
+
+
 static data/method
 init block
+Example:
+=================
+class Foo {
+    //static init block
+	private static double myval;
+    static {
+    	myval=Math.PI*3+9;
+    	
+        System.out.println("static init block");
+    }
+    //init block
+	{
+		System.out.println(" common code 1");
+	}
+	{
+		System.out.println(" common code 2");
+	}
+	//DRY dont repeat yourself
+    public Foo(){
+        System.out.println("inside default ctr");
+    }
 
+    public Foo(int i){
+        System.out.println("inside para ctr");
+    }
+
+}
+public class C_static_block {
+    public static void main(String[] args) {
+        
+        Foo foo=new Foo();
+        Foo foo2=new Foo(7);
+
+    }
+}
+
+----------------------------------------------
 understanding abstraction and encapsulation
 
+	how to apply abstraction in java?
+	
+	stack: how internally it works, how to call pop() push()
+	
+		interface and abs class
+		when to use what?
+		
+		how to prove loose coupling is important?
+		loose coupling and high cohesion?
+		
+		change is the only constant
+		
+		
 relationship bw objects?
+
+	3 kind of relationship bw the object
+	
+	USE A: MOST light relationship
+		i used to use metro to travel from LN to Noida
+		
+		class Metro{
+		}
+		
+		
+		class Passanger {
+			
+			public void travel(Metro m){
+				m.move();
+			}
+		
+		}
+		
+		
+		
+	HAS A (Association)
+		compostion vs aggigation
+		
+		I hv a thinkpad
+		class Laptop{
+		}
+		
+		class Trainer{
+			private Laptop;
+			
+			public setLaptop(Laptop l){
+			
+			}
+		}
+		
+	IS A
+		Inheritance
+		
+		class Emp{
+		}
+		
+		class SD extends Emp{
+		}
+		
 
 how to achive loose coupling?
 
