@@ -1,0 +1,23 @@
+package com.b.overloading_overriding;
+class Shape{
+	void draw() {
+		System.out.println("drawing shape");
+	}
+}
+class Circle extends Shape{
+	void draw() {
+		System.out.println("drawing Circle");
+	}
+}
+class Square extends Shape{
+	void draw() {
+		System.out.println("drawing Square");
+	}
+}
+
+public class B_Overriding {
+
+	public static void main(String[] args) {
+		
+	}
+}

@@ -1,0 +1,25 @@
+package com.c.abstraction.ex2;
+
+public class DemoMain {
+
+	public static void main(String[] args) {
+		
+		AmitStack stack=new AmitStack();
+		
+		someInternalLogic(stack);
+	}
+
+	private static void someInternalLogic(AmitStack stack) {
+	
+		stack.push(0);
+		stack.push(3);
+		stack.push(-33);
+		
+		System.out.println(stack.pop());
+		System.out.println(stack.pop());
+		System.out.println(stack.pop());
+	}
+	
+	
+
+}

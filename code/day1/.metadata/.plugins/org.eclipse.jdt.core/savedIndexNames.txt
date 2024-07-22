@@ -1,0 +1,9 @@
+INDEX VERSION 1.134+C:\Deutsche-bank-4-days-training-22july24\code\day1\.metadata\.plugins\org.eclipse.jdt.core
+1865797976.index
+682805650.index
+3413725848.index
+2570138264.index
+819751134.index
+2622699376.index
+228853775.index
+1307275926.index

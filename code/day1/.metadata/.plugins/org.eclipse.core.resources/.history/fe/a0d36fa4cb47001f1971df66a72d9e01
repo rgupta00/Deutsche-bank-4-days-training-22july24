@@ -1,0 +1,8 @@
+package com.b.overloading_overriding;
+
+public class A_InheritanceEx {
+
+	public static void main(String[] args) {
+		
+	}
+}

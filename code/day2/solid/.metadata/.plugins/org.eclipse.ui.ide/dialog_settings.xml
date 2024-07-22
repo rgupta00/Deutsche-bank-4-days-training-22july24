@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="ExternalProjectImportWizard">
+		<item key="WizardProjectsImportPage.STORE_NESTED_PROJECTS" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_CLOSE_CREATED_PROJECTS_ID" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
+		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="C:\Deutsche-bank-4-days-training-22july24\code\day2\solid\E_D_Solid"/>
+			<item value="C:\Deutsche-bank-4-days-training-22july24\code\day2\solid\D_I_Solid"/>
+			<item value="C:\Deutsche-bank-4-days-training-22july24\code\day2\solid\C_L_Solid"/>
+			<item value="C:\Deutsche-bank-4-days-training-22july24\code\day2\solid\B_O_Solid"/>
+			<item value="C:\Deutsche-bank-4-days-training-22july24\code\day2\solid\A_S_Solid-sol"/>
+			<item value="C:\Deutsche-bank-4-days-training-22july24\code\day2\solid\A_S_Solid-prob"/>
+		</list>
+		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value=""/>
+		</list>
+	</section>
+	<section name="ChooseWorkspaceDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="585"/>
+		<item key="DIALOG_Y_ORIGIN" value="269"/>
+	</section>
+	<section name="WORKBENCH_SETTINGS">
+		<list key="ENABLED_TRANSFERS">
+		</list>
+	</section>
+</section>
