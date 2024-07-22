@@ -340,11 +340,40 @@ relationship bw objects?
 		class SD extends Emp{
 		}
 		
+		reusbality: can be done with the help of inheritance as well as compositon
+			"favour compostion over inheritance"
+			
+	liskov substitution principle
+		tell us when to go for inheritance and when to go for compostion *
+	
+	
+	
+		extendablity: can only be done with the help of inheritance 
+		subitutablity: can only be done with the help of inheritance 
+		
 
 how to achive loose coupling?
+	abstraction
+		interface or abstract class
+		
+		
+		
+		
+		
 
-interface abs class
+interface abs class (When to use what)
+-----------------------------------
+monkey case study
 
+employee and feelanceer case study
+
+https://stackoverflow.com/questions/55445242/how-do-interfaces-break-dependencies-of-classes
+
+basic:
+
+
+Inheritance 
+	
 overloading vs overriding
 
 String class
@@ -363,5 +392,62 @@ Advance OOPs:
 SOLID 
 GOF patterns
 
+
+
+compile or not?
+------------------
+
+class A{
+	public void foo() {
+		System.out.println("foo method of class A");
+	}
+}
+
+class B extends A{
+	void foo() {
+		System.out.println("foo method of class B");
+	}
+}
+
+?
+
+
+
+Exception handling
+-----------------------
+to make ur code robust?
+
+kb: try catch throw throws finally
+
+user define exception
+some common ex in java
+
+* resp ex hierarchy?
+
+
+Collection
+-----------
+what is collection:readymade ds in java
+C++ STL==Collection
+
+data + structure + algo
+u provide  java		java
+:)
+
+
+Generics
+--------
+
+threads
+--------
+
+SOLID
+-----
+
+Design pattern
+------------
+
+jdbc
+-----
 
 

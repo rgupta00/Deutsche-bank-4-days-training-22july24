@@ -1,8 +1,0 @@
-/**
- * 
- */
-/**
- * 
- */
-module c_collections {
-}
