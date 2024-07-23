@@ -9,18 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
-
 //GOD class--- 
 class Product {
 	private int id;
 	private String name;
 	private double price;
 
-	
 	public boolean valiation() {
-		//logic of valiation in this class
+		// logic of valiation in this class
 		return true;
 	}
 
@@ -66,23 +62,18 @@ class Product {
 		return connection;
 	}
 
-	public SessionFactory getFactory() {
-		// code to get jdbc connection..
-		return null;
-	}
+	public void addProduct() {
+		try {
+			Connection connection = getConnection();
+			PreparedStatement pstmt = connection.prepareStatement("insert into product(name,price) values(?,?)");
+			pstmt.setString(1, name);
+			pstmt.setDouble(2, price);
 
-	public void addProduct() throws SQLException {
-		Connection connection = getConnection();
-		PreparedStatement pstmt = connection.prepareStatement("insert into product(name,price) values(?,?)");
-		pstmt.setString(1, name);
-		pstmt.setDouble(2, price);
-
-		pstmt.executeUpdate();
-		System.out.println("adding product to db using jdbc..");
+			pstmt.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 
 	}
 
-	public void addProductUsingHibernate(Product product) throws HibernateException {
-		System.out.println("adding book to db using hibernate....");
-	}
 }

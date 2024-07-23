@@ -43,6 +43,7 @@
 		<item key="WizardProjectsImportPage.STORE_CLOSE_CREATED_PROJECTS_ID" value="false"/>
 		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="C:\Deutsche-bank-4-days-training-22july24\code\day1\java8"/>
 			<item value="C:\Deutsche-bank-4-days-training-22july24\code\day1\threads"/>
 			<item value="C:\Deutsche-bank-4-days-training-22july24\code\day1\a_oops_basics"/>
 		</list>
