@@ -14,11 +14,17 @@ public class A_UsingHashMap {
 		//map.putIfAbsent("keshav", 89);
 		
 		//how to print the map
+		System.out.println("----------using keyset set-----------");
 		Set<String> keys=map.keySet();
 		for(String key: keys) {
-			System.out.println(key);
+			System.out.println(key+": "+ map.get(key));
 		}
 		//Entryset
+		System.out.println("----------using entry set-----------");
+		Set<Entry<String, Integer>> entrySet = map.entrySet();
+		for(Entry<String, Integer> e: entrySet) {
+			System.out.println(e.getKey()+" : "+ e.getValue());
+		}
 		
 		//java 8 syntex
 	}

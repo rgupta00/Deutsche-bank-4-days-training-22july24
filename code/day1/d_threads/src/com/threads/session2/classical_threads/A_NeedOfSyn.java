@@ -3,23 +3,15 @@ package com.threads.session2.classical_threads;
 
 
 class Printer{
-
-    private Object lock=new Object();
-     public void printLetter(String letter){
-         //
-         //
-         //Critical section
-         synchronized (lock){
+     public synchronized void printLetter(String letter){
+         
              System.out.print("[");
              try{
                  Thread.sleep(1000);
              }catch (InterruptedException e){}
              System.out.println(letter+ "]");
-         }
-        //
-         //
+       
     }
-
 }
 
 class Client implements Runnable{

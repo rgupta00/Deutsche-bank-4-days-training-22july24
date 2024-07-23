@@ -435,9 +435,6 @@ u provide  java		java
 :)
 
 
-Generics
---------
-
 threads
 --------
 
@@ -450,4 +447,11 @@ Design pattern
 jdbc
 -----
 
+intro maven
+--------
 
+junit 5
+--------
+
+project work
+---------

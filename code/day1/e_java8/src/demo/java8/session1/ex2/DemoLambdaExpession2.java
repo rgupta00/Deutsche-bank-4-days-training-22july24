@@ -1,5 +1,7 @@
 package demo.java8.session1.ex2;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -25,15 +27,40 @@ public class DemoLambdaExpession2 {
 						new Book(11, "python", "ekta", 840),
 						new Book(621, "c programming", "gunika", 300));
 
-		//find all the java books names
 		//declartive code => opt is not ur job ==> jvm :)
+		books.stream()
+		.filter(b->b.getPrice()>=400)
+		.sorted(Comparator.comparing(Book::getPrice))
+		.map(b->b.getTitle())
+		.forEach(name-> System.out.println(name));
 		
-		List<String> booksNames=books.stream()
-				.filter(b->b.getTitle().contains("java"))
-				.map(b->b.getTitle())
-				.collect(toList());
+		//find all the java books names sorted by price
+//		Collections.sort(books, new Comparator<Book>() {
+//			@Override
+//			public int compare(Book o1, Book o2) {
+//				return Double.compare(o1.getPrice(), o2.getPrice());
+//			}
+//		});
+//		List<String>names=new ArrayList<>();
+//		for(Book b: books) {
+//			names.add(b.getTitle());
+//		}
+//		
+//		for(String name: names) {
+//			System.out.println(name);
+//		}
 		
-		booksNames.forEach(title-> System.out.println(title));
+		
+		//classical way
+		
+		
+		
+//		List<String> booksNames=books.stream()
+//				.filter(b->b.getTitle().contains("java"))
+//				.map(b->b.getTitle())
+//				.collect(toList());
+//		
+//		booksNames.forEach(title-> System.out.println(title));
 
 
 	}

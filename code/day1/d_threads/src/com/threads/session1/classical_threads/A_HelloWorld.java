@@ -1,6 +1,14 @@
 package com.threads.session1.classical_threads;
-
+/*
+ * 	runnable
+ * 		Job--------- worker
+ * 		imp of runnable ------thread is worker
+ * 
+ * 	Thread
+ * 	TP
+ */
 class Job implements  Runnable{
+
     @Override
     public void run() {
         //Thread.currentThread(): it get the contextaul inforation of threads
@@ -10,6 +18,7 @@ class Job implements  Runnable{
         }catch (InterruptedException e){}
         System.out.println(Thread.currentThread().getName() + " "+ Thread.currentThread().getPriority()+" job ended");
     }
+
 }
 public class A_HelloWorld {
     public static void main(String[] args) {

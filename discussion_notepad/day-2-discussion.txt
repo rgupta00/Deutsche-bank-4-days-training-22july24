@@ -1,0 +1,199 @@
+Qucick recap
+------------
+OOps concepts 
+	class object ctr, getter setter
+	abs encapsulation
+	interface vs abs
+	loose coupling and high cohesion
+	
+	String class
+		immutable
+	String vs SB vs StringBuffer 
+	
+	Excpetion handing
+		try catch throw throws finally
+		checked vs unchecked ex
+		diff type of ex
+		custom ex
+	
+	Collection
+	what is collection:readymade ds in java
+	C++ STL==Collection
+
+	data + structure + algo
+	u provide  java		java
+	:)
+	
+	List:	
+		AL, LL, Vector
+		performance diff
+		
+	Set
+		dont allow duplicate
+		HashSet
+		LinkedHashSet
+		TreeSet
+		how to get uniqe words from the files
+		
+	Iterator vs ListIterator
+		
+	Comparable vs Comnparator : used to sort the user define data
+	Map
+		K V
+       HashMap
+		LinkedHashMap
+		TreeMap
+	
+	
+	How to iterate the map?
+	KeySet
+	EntrySet
+	Java 8 syntex: steam processing*
+
+	Generics: type safty to the data
+	
+Java 8 stream processing:
+------------------------
+stream processing is for decleartive data processing 
+	inteface evoluation ---> annonous inner class-->lambda--->funcational interface--->stream 
+	default method												lots of readymade fi
+	static method												in jdk
+		more in details
+			pls refer YT video
+			https://www.youtube.com/watch?v=5IJG483LIjk&list=PLv2-IhRmhbyRJqNJvuhHnmS4UiKgs_9qy&ab_channel=BusyCoderAcademy
+
+
+
+multithreading and Concurrency
+---------------------------------
+jdbc
+-----
+java database connectivity
+
+
+java app ---------------------------------- db
+											RDBMS
+											
+language			translator						sql
+											Oracle
+											mysql
+											....
+					jdbc driver
+					is provide by the vendor*
+					
+	java dev: api jdbc insulate from db choice
+	just connection details are not same
+	
+Spring framework: hello world 10+ jar
+
+hello world of jdbc:
+----------------------
+normal project : u have to add jar file manually :(
+
+java world : maven is a build tools
+		npm
+		that help you to automatically download the jar file
+		and it also get transitive dependencies
+		
+how to get started : hello world of jdbc with maven
+1. we have to check maven is configed or not?
+	cmd X
+	eclipse ide (ok)
+	
+	
+	
+	try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		}catch(ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		//Create connection object
+		
+		try{
+			Connection con=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/busycoder_db","root","root");
+			Statement stmt=con.createStatement();
+			ResultSet rs=stmt.executeQuery("select * from product");
+			while(rs.next()){
+				System.out.print(rs.getInt("id")+" ");
+				System.out.print(rs.getString("name")+" ");
+				System.out.println(rs.getDouble("price"));
+				
+		        }
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+	
+	
+problem with hello world jdbc:
+---------------------------
+hard coding of connection details ; what if i need to change the db?
+
+property file 
+connection factory aka factory dp
+
+imporved jdbc code
+
+how to insert the records
+-----------------------
+statement vs preparestatement ( + performance, it dont have sql injection *)
+
+executeQuery(get) vs executeUpdate (del/update/add)
+
+
+CRUD operation with jdbc:
+-------------------------
+C: create
+R: read
+U: update
+D: delete
+
+What we have done?
+
+controller ------------------ service ---------------- dao -------------db
+
+3 tier arch
+
+product application:
+-------------------
+step by step
+
+1. dao
+	dto
+	ProductDao
+	ProductDaoImpl
+	ConnectionFactory
+	
+2. service
+		ProductService
+		ProductServiceImpl
+		
+3. controller
+	Main
+		REST controller
+		
+		
+		
+		
+	
+	
+		
+
+
+
+SOLID:
+-----
+
+Design pattern
+------------
+
+
+
+intro maven
+--------
+
+junit 5
+--------
+
+project work
+---------
