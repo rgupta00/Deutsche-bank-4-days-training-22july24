@@ -1,0 +1,68 @@
+
+step 1: u need to connect to database:
+Sqlplus Credentials
+sql plus username/password
+--------------------------
+Username:- system
+Ppassword:- oracle
+
+
+create a connection in sql plus:
+-------------------------------
+give the details username , password , database name (ORCL)
+
+get a connection
+
+Step 2:
+now u need to create the tables and quaries:
+-----------------------------------------------
+CREATE TABLE product
+(
+  id numeric(10) not null,
+  name varchar2(50) not null,
+  price BINARY_DOUBLE,
+  CONSTRAINT product_pk PRIMARY KEY (id)
+);
+
+insert into product(id, name, price) values(22,'laptop cover',3000);
+commit;
+
+Step 3: download the project shown / github
+and change the connection details
+
+
+db connection details:
+-------------------
+our jdbc connection factory:
+---------------------------
+jdbc.driver=oracle.jdbc.driver.OracleDriver
+jdbc.url=jdbc:oracle:thin:@localhost:1521:ORCL
+jdbc.username=System
+jdbc.password=oracle
+
+
+step 4: remove the mysql dep from maven and add ( oracle) dep
+<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc11</artifactId>
+			<version>21.1.0.0</version>
+</dependency>
+
+then update the project
+
+
+
+For spring boot project
+-----------------------------
+
+
+spring boot application:
+---------------------------
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:ORCL
+spring.datasource.username=System
+spring.datasource.password=oracle
+spring.datasource.driver-class-name=oracle.jdbc.driver.OracleDriver
+
+spring.jpa.database-platform=org.hibernate.dialect.OracleDialect
+spring.jpa.hibernate.ddl-auto=update
+

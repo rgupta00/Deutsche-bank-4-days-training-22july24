@@ -12,5 +12,4 @@ public class Main {
 		List<Product> products=productService.getAll();
 		products.forEach(p-> System.out.println(p));
 	}
-
 }
