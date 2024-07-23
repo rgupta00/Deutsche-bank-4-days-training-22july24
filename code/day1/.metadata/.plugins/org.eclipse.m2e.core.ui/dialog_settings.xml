@@ -44,11 +44,13 @@
 	</section>
 	<section name="MavenProjectWizardArtifactPage">
 		<list key="groupId">
+			<item value="com.jdbcdemo"/>
 			<item value="com.demo"/>
 		</list>
 		<list key="name">
 		</list>
 		<list key="artifactId">
+			<item value="jdbc_demo"/>
 			<item value="testing"/>
 			<item value="demo"/>
 		</list>
