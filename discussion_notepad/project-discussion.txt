@@ -1,0 +1,214 @@
+Lab Exercise : TODO
+==========================
+1) AirportRepository 	(/airportapps/src/main/java/com/airportapp/repository/IAirportRepository.java)
+---> declare method to find Airports by name
+---> declare method find Airports by latitude
+---> declare method find Airports by longitude
+
+
+
+2)Provide implementation of  IAirportService (/airportapps/src/main/java/com/airport/services/IAirportService.java)
+
+3) AirportRestController  --> Add IAirportService Dependency
+
+4) --->findAirportsByType() --> Invoke appropriate methods from IAirportService  
+
+5) Create ServiceLayer for following Repository Classes :
+-ICountryRepository
+-INavAidRepository
+-IRegionRepository
+-UserInfoRepository
+
+
+
+=======================Setup==============================
+
+
+step 1: u need to connect to database:
+
+login to oracle:
+Username:- system
+Ppassword:- oracle
+
+
+alter session set "_ORACLE_SCRIPT"=true;
+
+CREATE USER scott IDENTIFIED BY tiger;
+GRANT CONNECT TO scott;
+GRANT CONNECT, RESOURCE TO scott;
+GRANT CREATE SESSION  TO scott;
+
+GRANT UNLIMITED TABLESPACE TO scott;
+
+SELECT * FROM all_users where username='scott';
+
+select * from user_tables;
+
+step 2: run the spring boot application with changes in db properties:
+----------------------------------------------------------------------
+spring boot application:
+---------------------------
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:ORCL
+spring.datasource.username=System
+spring.datasource.password=oracle
+spring.datasource.driver-class-name=oracle.jdbc.driver.OracleDriver
+
+spring.jpa.database-platform=org.hibernate.dialect.OracleDialect
+spring.jpa.hibernate.ddl-auto=update
+
+
+
+step 2: you need to connect to oracle sql developer:
+-------------------------------------------------
+Username:- system
+Ppassword:- oracle
+create new connection : with database ORCL
+
+now check the tables:
+table is automatically created, due to spring data :)
+
+we just need to add some records:
+------------------------------
+They have given sql script (but will not work for oracle )
+
+Not required if u want to create user with api:
+------------------------------------------------------
+add records to user_info table:
+
+insert into user_info(name,password,email,roles) 
+values('student','$2a$12$QQag2gV/aKxYJKqodAZah.ufM3DrYN8ephrgu57L8DV3tL4ru08c2','student@msn.com','ROLE_USER');
+
+insert into user_info(name,password,email,roles) 
+values('vinsys','$2a$12$QQag2gV/aKxYJKqodAZah.ufM3DrYN8ephrgu57L8DV3tL4ru08c2','vinsys@msn.com','ROLE_USER');
+
+
+add records to airport table:
+INSERT INTO airports (name,latitude,longitude,country_name,region_name,municipality,type) VALUES
+	 ('London Heathrow Airport','51.4706','-0.461941','England','ENG','London','large_airport');
+INSERT INTO airports (name,latitude,longitude,country_name,region_name,municipality,type) VALUES 
+	 ('Los Angeles International Airport','33.942501','-118.407997','California','CA','Los Angeles','large_airport');
+
+INSERT INTO airports (name,latitude,longitude,country_name,region_name,municipality,type) VALUES
+	 ('Chicago O''Hare International Airport','41.9786','-87.9048','Illinois','IL','Chicago','large_airport');
+INSERT INTO airports (name,latitude,longitude,country_name,region_name,municipality,type) VALUES
+	 ('John F Kennedy International Airport','40.639801','-73.7789','New York','NY','New York','large_airport');
+	 
+INSERT INTO airports (name,latitude,longitude,country_name,region_name,municipality,type) VALUES
+	 ('Hartsfield Jackson Atlanta International Airport','33.6367','-84.428101','Georgia','GA','Atlanta','large_airport');
+
+INSERT INTO airports (name,latitude,longitude,country_name,region_name,municipality,type) VALUES 
+	 ('San Francisco International Airport','37.61899948120117','-122.375','California','CA','San Francisco','large_airport');
+	 
+INSERT INTO airports (name,latitude,longitude,country_name,region_name,municipality,type) VALUES
+	 ('Amsterdam Airport Schiphol','52.308601','4.76389','Noord-Holland','NH','Amsterdam','large_airport');
+INSERT INTO airports (name,latitude,longitude,country_name,region_name,municipality,type) VALUES
+	 ('Charles de Gaulle International Airport','49.012798','2.55','Île-de-France','IDF','Paris','large_airport');
+	 
+INSERT INTO airports (name,latitude,longitude,country_name,region_name,municipality,type) VALUES
+	 ('Frankfurt am Main Airport','50.033333','8.570556','Hesse','HE','Frankfurt am Main','large_airport');
+	 
+INSERT INTO airports (name,latitude,longitude,country_name,region_name,municipality,type) VALUES
+	 ('Dallas Fort Worth International Airport','32.896801','-97.038002','Texas','TX','Dallas-Fort Worth','large_airport');
+	 
+commit;
+
+
+add records to countries table:
+---------------------------------
+INSERT INTO countries (code,name,continent) VALUES ('AO','Angola','AF');	 
+INSERT INTO countries (code,name,continent) VALUES('BF','Burkina Faso','AF');
+INSERT INTO countries (code,name,continent) VALUES('BI','Burundi','AF');
+INSERT INTO countries (code,name,continent) VALUES('BJ','Benin','AF');
+INSERT INTO countries (code,name,continent) VALUES ('BW','Botswana','AF');
+INSERT INTO countries (code,name,continent) VALUES ('CD','Congo (Kinshasa)','AF');
+INSERT INTO countries (code,name,continent) VALUES ('CF','Central African Republic','AF');
+INSERT INTO countries (code,name,continent) VALUES ('CG','Congo (Brazzaville)','AF');
+INSERT INTO countries (code,name,continent) VALUES ('CI','Côte d''Ivoire','AF');
+INSERT INTO countries (code,name,continent) VALUES('CM','Cameroon','AF');
+INSERT INTO countries (code,name,continent) VALUES('CV','Cape Verde','AF');
+
+INSERT INTO countries (code,name,continent) VALUES ('DJ','Djibouti','AF');
+INSERT INTO countries (code,name,continent) VALUES ('DZ','Algeria','AF');
+INSERT INTO countries (code,name,continent) VALUES ('EG','Egypt','AF');
+INSERT INTO countries (code,name,continent) VALUES ('EH','Western Sahara','AF');
+INSERT INTO countries (code,name,continent) VALUES ('ER','Eritrea','AF');
+INSERT INTO countries (code,name,continent) VALUES ('ET','Ethiopia','AF');
+INSERT INTO countries (code,name,continent) VALUES ('GA','Gabon','AF');
+INSERT INTO countries (code,name,continent) VALUES ('GH','Ghana','AF');
+INSERT INTO countries (code,name,continent) VALUES ('GM','Gambia','AF');
+
+add records to navaids table:
+--------------------------
+INSERT INTO navaids (name,latitude,longitude) VALUES('Williams Harbour','52.55889892578125','-55.78219985961914');
+INSERT INTO navaids (name,latitude,longitude) VALUES ('Sable Island','43.930599212646484','-60.02289962768555');
+INSERT INTO navaids (name,latitude,longitude) VALUES ('Nanaimo','49.05720138549805','-123.87200164794922');
+INSERT INTO navaids (name,latitude,longitude) VALUES ('Charlottetown','52.775001525878906','-56.124000549316406');
+INSERT INTO navaids (name,latitude,longitude) VALUES ('Black Tickle','53.46670150756836','-55.78739929199219');
+INSERT INTO navaids (name,latitude,longitude) VALUES ('Manta','47.63059997558594','-65.74469757080078');
+INSERT INTO navaids (name,latitude,longitude) VALUES ('Zama Lake','59.02330017089844','-118.84300231933594');
+INSERT INTO navaids (name,latitude,longitude) VALUES ('North Of Sixty','60.31890106201172','-103.12899780273438');
+INSERT INTO navaids (name,latitude,longitude) VALUES ('Lloydminster','53.31330108642578','-110.08000183105469');
+INSERT INTO navaids (name,latitude,longitude) VALUES ('Masset','54.031700134277344','-132.1269989013672');
+	 
+INSERT INTO navaids (name,latitude,longitude) VALUES ('Sandy Bay','55.54330062866211','-102.2760009765625');
+INSERT INTO navaids (name,latitude,longitude) VALUES ('South Indian Lake','56.79389953613281','-98.904296875');
+INSERT INTO navaids (name,latitude,longitude) VALUES ('Springdale','49.4900016784668','-56.18470001220703');
+INSERT INTO navaids (name,latitude,longitude) VALUES ('Bathurst','47.63140106201172','-65.74440002441406');
+INSERT INTO navaids (name,latitude,longitude) VALUES ('Lebel-sur-Quevillon','49.0372009277','-77.0207977295');
+INSERT INTO navaids (name,latitude,longitude) VALUES ('Grand Forks','49.01750183105469','-118.42400360107422');
+INSERT INTO navaids (name,latitude,longitude) VALUES ('Camrose','53.03219985961914','-112.81300354003906');
+INSERT INTO navaids (name,latitude,longitude) VALUES ('Camrose','53.032798767089844','-112.81400299072266');
+INSERT INTO navaids (name,latitude,longitude) VALUES ('Opapimiskan Lake','52.60309982299805','-90.37439727783203');
+INSERT INTO navaids (name,latitude,longitude) VALUES('Mont-Laurier','46.602500915527344','-75.47059631347656');
+
+add records to regions table:
+--------------------------
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AD-02','Canillo','EU','AD');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AD-03','Encamp','EU','AD');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AD-04','La Massana','EU','AD');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AD-05','Ordino','EU','AD');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AD-06','Sant Julià de Lòria','EU','AD');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AD-07','Andorra la Vella','EU','AD');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AD-08','Escaldes-Engordany','EU','AD');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AD-U-A','(unassigned)','EU','AD');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AE-AJ','Ajman Emirate','AS','AE');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AE-AZ','Abu Dhabi Emirate','AS','AE');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AE-DU','Dubai Emirate','AS','AE');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AE-FU','Fujairah Emirate','AS','AE');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AE-RK','Ras al-Khaimah Emirate','AS','AE');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AE-SH','Sharjah Emirate','AS','AE');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AE-U-A','(unassigned)','AS','AE');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AE-UQ','Umm al-Quwain Emirate','AS','AE');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AF-BAL','Balkh Province','AS','AF');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AF-BAM','Bamiyan Province','AS','AF');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AF-BDG','Badghis Province','AS','AF');
+INSERT INTO regions (code,name,continent,iso_country) VALUES ('AF-BDS','Badakhshan Province','AS','AF');
+
+http://localhost:8080/auth/addNewUser
+{
+"name":"vinsys",
+"password":"123",
+"email":"vinsys@msn.com",
+"roles":"ROLE_USER"
+}
+
+http://localhost:8080/auth/addNewUser
+{
+"name":"student",
+"password":"123",
+"email":"student@msn.com",
+"roles":"ROLE_USER"
+}
+
+http://localhost:8080/auth/generateToken
+{
+"username":"vinsys",
+"password":"123",
+}
+http://localhost:8080/auth/generateToken
+{
+"username":"student",
+"password":"123",
+}
+
+http://localhost:8080/airports/bytype/small_airport (pass the token generated )
