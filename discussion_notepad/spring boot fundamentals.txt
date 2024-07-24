@@ -795,38 +795,201 @@ Spring boot testing
 * Spring boot testing
 * Communication bw spring boot applications
 
+====================
+repo layer testing
+====================
 
-repo
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.Rollback;
+
+import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
+@DataJpaTest
+class ProductRepoTest {
 
+    @Autowired
+    private ProductRepo productRepo;
+    private Product product;
 
-mvn clean verify sonar:sonar -Dsonar.projectKey=project1 -Dsonar.host.url=http://localhost:9000 -Dsonar.login=sqp_c728475131a378fa2c93963c688a9450b3563b6d
+    @BeforeEach
+    void setUp() {
+        product=new Product("laptop",120000);
+    }
 
-service
+    @DisplayName("given Product Object When Saved Then Retun Product Object")
+    @Test
+    @Rollback(value = true)
+    public void givenProductObjectWhenSavedThenRetunProductObject(){
+       Product savedProduct= productRepo.save(product);
+        assertThat(savedProduct).isNotNull();
+        assertThat(savedProduct.getId()).isGreaterThan(0);
+    }
+
+    @DisplayName("givenProductListWhenFindAllThenRetunProductList")
+    @Test
+    public void givenProductListWhenFindAllThenRetunProductList(){
+        //given
+       Product product2=new Product("laptop cover",1200);
+       productRepo.save(product);
+       productRepo.save(product2);
+       //when
+        List<Product> productList=productRepo.findAll();
+        //then verify
+        assertThat(productList).isNotNull();
+        assertThat(productList.size()).isEqualTo(2);
+    }
+    @DisplayName("JUnit test for get product by id operation")
+    @Test
+    public void givenProductObject_whenFindById_thenReturnProductObject(){
+        // given - precondition or setup
+        Product p1=new Product("laptop",120000);
+        productRepo.save(p1);
+
+        // when -  action or the behaviour that we are going test
+        Product productDB = productRepo.findById(p1.getId()).get();
+        // then - verify the output
+        assertThat(productDB).isNotNull();
+    }
+    @DisplayName("JUnit test for update product operation")
+    @Test
+    public void givenEmployeeObject_whenUpdateProduct_thenReturnUpdatedProduct(){
+        // given - precondition or setup
+        Product p1=new Product("laptop",120000);
+        productRepo.save(p1);
+        // when -  action or the behaviour that we are going test
+        Product savedProduct = productRepo.findById(p1.getId()).get();
+        savedProduct.setPrice(130000);
+        Product updatedProduct =  productRepo.save(savedProduct);
+
+        assertThat(updatedProduct.getPrice()).isEqualTo(130000);
+    }
+
+    @DisplayName("JUnit test for delete product operation")
+    @Test
+    public void givenProductObject_whenDelete_thenRemoveProduct(){
+        // given - precondition or setup
+        Product p1=new Product("laptop",120000);
+        productRepo.save(p1);
+
+        // when -  action or the behaviour that we are going test
+        productRepo.deleteById(p1.getId());
+        Optional<Product> employeeOptional = productRepo.findById(product.getId());
+
+        // then - verify the output
+        assertThat(employeeOptional).isEmpty();
+    }
+
+    @AfterEach
+    void tearDown() {
+    }
+}
+
+====================
+service layer testing
+====================
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
+//i want to mock dao layer
+@ExtendWith(MockitoExtension.class)
+class ProductServiceImplTest {
+
+    @Mock
+    private ProductRepo productRepo;
+
+    @InjectMocks
+    private ProductServiceImpl productService;
+
+    private Product product;
+
+    @BeforeEach
+    void setUp() {
+        product=new Product(1,"laptop",120000);
+    }
+
+    @DisplayName("JUnit test for save Product method")
+    @Test
+    public void givenProductObject_whenSaveProduct_thenReturnProductObject(){
+        // given - precondition or setup
+        given(productRepo.save(product)).willReturn(product);
+        Product savedProduct = productService.addProduct(product);
+        assertThat(savedProduct).isNotNull();
+    }
+
+
+    @DisplayName("JUnit test for getAll Product method")
+    @Test
+    public void givenProductList_whenGetAllProduct_thenReturnProductList(){
+        // given - precondition or setup
+        Product  product2=new Product("laptop cover", 1200);
+
+        given(productRepo.findAll()).willReturn(List.of(product,product2));
+
+        // when -  action or the behaviour that we are going test
+        List<Product> productList = productService.getAll();
+
+        // then - verify the output
+        Assertions.assertThat(productList).isNotNull();
+        Assertions.assertThat(productList.size()).isEqualTo(2);
+    }
+
+
+    @DisplayName("JUnit test for getAll Product method (negative scenario)")
+    @Test
+    public void givenEmptyEmployeesList_whenGetAllEmployees_thenReturnEmptyEmployeesList(){
+        // given - precondition or setup
+        given(productRepo.findAll()).willReturn(Collections.emptyList());
+
+        // when -  action or the behaviour that we are going test
+        List<Product> employeeList = productService.getAll();
+        // then - verify the output
+        Assertions.assertThat(employeeList).isEmpty();
+        Assertions.assertThat(employeeList.size()).isEqualTo(0);
+    }
 
 
 
-controller
+
+
+    @AfterEach
+    void tearDown() {
+    }
+
+
+}
+
+
+
+==========================
+controller layer testing
+===========================
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.productapp.repo.Product;
 import com.productapp.service.ProductService;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -847,10 +1010,118 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@WebMvcTest(controllers = ProductRestController.class)
+class ProductRestControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockBean
+    private ProductService productService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
 
-integration layer
---------------
+    @Test
+    public void givenProductObject_whenCreateProduct_thenReturnSavedProduct() throws Exception{
+
+        // given - precondition or setup
+        Product product=new Product("laptop", 120000);
+        given(productService.addProduct(any(Product.class)))
+                .willAnswer((invocation)-> invocation.getArgument(0));
+
+        // when - action or behaviour that we are going test
+        ResultActions response = mockMvc.perform(post("/products")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(product)));
+
+        // then - verify the result or output using assert statements
+        response.andDo(print()).
+                andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name",
+                        is(product.getName())))
+                .andExpect(jsonPath("$.price",
+                        is(product.getPrice())));
+    }
+    @Test
+    public void givenListOfProducts_whenGetAllProducts_thenReturnProductList() throws Exception{
+        // given - precondition or setup
+        List<Product> listOfProducts = new ArrayList<>();
+        listOfProducts.add(Product.builder().name("a").price(6000).build());
+        listOfProducts.add(Product.builder().name("b").price(6000).build());
+        given(productService.getAll()).willReturn(listOfProducts);
+
+        // when -  action or the behaviour that we are going test
+        ResultActions response = mockMvc.perform(get("/products"));
+
+        // then - verify the output
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.size()",
+                        is(listOfProducts.size())));
+
+    }
+
+    // positive scenario - valid product id
+    @Test
+    public void givenProductId_whenGetProductById_thenReturnProductObject() throws Exception{
+        // given - precondition or setup
+        int productId = 1;
+        Product product=new Product(1,"laptop", 120000);
+        given(productService.getById(productId)).willReturn(product);
+
+        // when -  action or the behaviour that we are going test
+        ResultActions response = mockMvc.perform(get("/products/{id}", productId));
+
+        // then - verify the output
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.name", is(product.getName())))
+                .andExpect(jsonPath("$.price", is(product.getPrice())));
+
+    }
+
+
+    // @Test
+    public void givenInvalidProductId_whenGetProductById_thenReturnEmpty() throws Exception{
+        // given - precondition or setup
+        int productId = 1;
+        Product product=new Product(1,"laptop", 120000);
+        given(productService.getById(productId)).willReturn(null);
+
+        // when -  action or the behaviour that we are going test
+        ResultActions response = mockMvc.perform(get("/products/{id}", productId));
+
+        // then - verify the output
+        response.andExpect(status().isNotFound())
+                .andDo(print());
+
+    }
+
+    // JUnit test for delete employee REST API
+    @Test
+    public void givenProductId_whenDeleteProduct_thenReturn200() throws Exception{
+        // given - precondition or setup
+        int productId = 1;
+        willDoNothing().given(productService).deleteProduct(productId);
+
+        // when -  action or the behaviour that we are going test
+        ResultActions response = mockMvc.perform(delete("/products/{id}", productId));
+
+        // then - verify the output
+        response.andExpect(status().isOk())
+                .andDo(print());
+    }
+}
+
+
+
+==========================
+integration layer testing
+===========================
+
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.productapp.repo.Product;
 import com.productapp.repo.ProductRepo;
@@ -873,3 +1144,196 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
+public class ProductAppIntegrationTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private ProductRepo productRepo;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @BeforeEach
+    void setup(){
+        productRepo.deleteAll();
+    }
+
+    @Test
+    public void givenProductObject_whenCreateProduct_thenReturnSavedProduct() throws Exception{
+
+        // given - precondition or setup
+        Product product = Product.builder()
+                .name("watch")
+                .price(7000)
+                .build();
+
+        // when - action or behaviour that we are going test
+        ResultActions response = mockMvc.perform(post("/products")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(product)));
+
+        // then - verify the result or output using assert statements
+        response.andDo(print()).
+                andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name",
+                        is(product.getName())))
+                .andExpect(jsonPath("$.price",
+                        is(product.getPrice())));
+
+
+    }
+
+    @Test
+    public void givenListOfProducts_whenGetAllProducts_thenReturnProductList() throws Exception{
+        // given - precondition or setup
+        List<Product> listOfProducts = new ArrayList<>();
+        listOfProducts.add(Product.builder().name("foo").price(7000).build());
+        listOfProducts.add(Product.builder().name("bar").price(7000).build());
+        productRepo.saveAll(listOfProducts);
+        // when -  action or the behaviour that we are going test
+        ResultActions response = mockMvc.perform(get("/products"));
+
+        // then - verify the output
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.size()",
+                        is(listOfProducts.size())));
+
+    }
+
+    // positive scenario - valid employee id
+    // JUnit test for GET employee by id REST API
+    @Test
+    public void givenProductId_whenGetProductById_thenReturnProducteObject() throws Exception{
+        // given - precondition or setup
+        Product product = Product.builder()
+                .name("watch")
+                .price(7000)
+                .build();
+        productRepo.save(product);
+
+        // when -  action or the behaviour that we are going test
+        ResultActions response = mockMvc.perform(get("/products/{id}", product.getId()));
+
+        // then - verify the output
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.name", is(product.getName())))
+                .andExpect(jsonPath("$.price", is(product.getPrice())));
+
+    }
+
+
+
+    // JUnit test for delete employee REST API
+    @Test
+    public void givenProductId_whenDeleteProduct_thenReturn200() throws Exception{
+        // given - precondition or setup
+        Product product = Product.builder()
+                .name("watch")
+                .price(7000)
+                .build();
+        productRepo.save(product);
+        // when -  action or the behaviour that we are going test
+        ResultActions response = mockMvc.perform(delete("/products/{id}", product.getId()));
+
+        // then - verify the output
+        response.andExpect(status().isOk())
+                .andDo(print());
+    }
+}
+
+
+jacoco
+========
+https://medium.com/@truongbui95/jacoco-code-coverage-with-spring-boot-835af8debc68
+
+jacoco plugin:
+----------------
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>${jacoco.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<!-- com.productapp.Productapp01Application
+						com.productapp.exceptions.ProductNotFoundException
+						com.productapp.dto.ErrorInfo
+						com.productapp.repo.Product
+						-->
+						<exclude>com/productapp/Productapp01Application.class</exclude>
+						<exclude>com/productapp/exceptions/ProductNotFoundException.class</exclude>
+						<exclude>com/productapp/dto/ErrorInfo.class</exclude>
+						<exclude>com/productapp/repo/Product.class</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-check</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<rule>
+									<element>PACKAGE</element>
+									<limits>
+										<limit>
+											<counter>LINE</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>00%</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
+
+sonarcube with spring boot:
+===========================
+sonarcube 9.9.4 lts
+https://www.sonarsource.com/products/sonarqube/downloads/
+
+https://blog.stackademic.com/integratation-of-sonarqube-with-springboot-6d2cebd4ef95
+
+mvn clean verify sonar:sonar -Dsonar.projectKey=project1 -Dsonar.host.url=http://localhost:9000 -Dsonar.login=sqp_c728475131a378fa2c93963c688a9450b3563b6d
