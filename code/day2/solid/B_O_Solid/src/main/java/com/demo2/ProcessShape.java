@@ -1,5 +1,6 @@
 package com.demo2;
 
+//OCP
 public class ProcessShape {
 
 	
@@ -12,6 +13,8 @@ public class ProcessShape {
 		}
 		else if(shape instanceof TriangleShape) {
 			((TriangleShape) shape).drawTriangleShape();
+		}else if(shape instanceof RectangleShape) {
+			((RectangleShape) shape).drawRectangeShape();
 		}
 	}
 }

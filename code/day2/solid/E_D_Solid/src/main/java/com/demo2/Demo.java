@@ -9,15 +9,10 @@ public class Demo {
 		Tyre tyre=new MrfTyre();
 		Engine engine=new V8Engine();
 		
-		
-		Car car =new Car();
-		
-		//manual dp=> if it can be automize, it would be great
-		//Spring framewrok: IOC(external agency )
-		car.setEngine(engine);
-		car.setTyre(tyre);
-		
-		
+		//Manual DI: i am doing myself
+		Car car =new Car(engine, tyre);
+		//Spring framework: IOC container. that automized job of assigning the object
+	
 		car.drive();
 	}
 }
