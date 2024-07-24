@@ -429,6 +429,7 @@ public class ProductController {
 }
 
 
+ @ResponseStatus(HttpStatus.CREATED)
 
 Step 5: rest controller: ResponseEntity
 _______________________________________
@@ -475,7 +476,7 @@ public class ProductController {
 
 Step 6: rest controller exception handling
 _______________________________________
-@ResponseStatus(code =HS.NotFound)
+@ResponseStatus(code =HttpStatus.NOT_FOUND)
 ProductNotFoundException extends RuntimeExcetion{
 }
 
