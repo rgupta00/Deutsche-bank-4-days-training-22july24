@@ -1,32 +1,24 @@
-Spring with sprng boot workshop: 5 days
+Spring with Spring boot workshop
 ___________________________
 
 Key topics:
 ==================
 => Understand Depdendency Injection
-=> bean wiring :xml, annoation, java configuraton
-=> Spring boot aop
-=> spring mvc basics
+=> bean wiring :annoation, java configuraton
 => REST basics
 => Spring boot REST application
-=> Spring AOP
-=> Spring JDBCTemplate
 => Spring data
 => Spring boot web application, Spring MVC arch
-=>Spring boot Monotring and Logging
-=> Spring boot security
 => spring boot profile
 => spring boot actuator
-=> spring boot jdbcTemplate
+=>Spring boot Monotring and Logging
+=> Spring boot testing
+=> Spring boot security
 => Spring Boot microservice architecture
-=> spring boot openfeign
 
 
-Day 1: session 1:
-____________________
-
+Session 1:
 Understand Depdendency Injection
-_________________________________
 
 What is the need of spring framework?
 -----------------------------------
@@ -35,7 +27,7 @@ What is the need of spring framework?
 Lets take a example:
 
 Rest 
-Controller <------------ Service layer <---------- persistance layer <------ SessionFactory
+Controller <------------ Service layer <---------- persistance layer <------ db
 
 ravi team		sumit team			kapil team
 
@@ -59,7 +51,7 @@ beside that spring DI help to manage dependency of our project and make our proj
 public class Product {
 		private Integer id;
 		private String name;
-		private BigDecimal price;	
+		private int price;	
 }
 					
 
@@ -136,52 +128,12 @@ ________________________
 
 
 
-Understand Aspect Oriented Programming
-______________________________________
-	* If i need to take training at some client location, infra is provided by that client
-		i need to only carray my laptop
-
-	* help to achive high cohesion
-
-
- consider: we need to find how much time it take to execute code of service layer and do logging into a log file
-
-
-public interface ProductServiceImpl  implements ProductService{
-
-	private ProductDao productDao;
-
-	public ProductServiceImpl(){
-		productDao=new ProductDaoImplUtil();   // or ProductDaoImplJdbc()
-	}
-
-
-	public List<String>getProducts(){
-	//how much it take to execute and do logging too ....
-	// business logic
-	}
-}
- 
-
 
 
 
 session 2:
 ___________
-MVC design pattern
-
-
-
-History Spring boot : Summarized:
-_________________________________
-
-1.0.0: Support from Java 6 - 8
-1.3.0: Support from Java 7 - 8, additional configuration for Java 6 required
-2.0.0: Support from Java 8 - ...
-
-
-
-
+ Spring vs Spring boot
 
 	Advantage of spring boot , configuration spring boot
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -236,21 +188,6 @@ _________________________________
 	spring-boot:run
 
 
-	Spring boot ApplicationRunner and CommandLineRunner:
-	----------------------------------------
-
-	@Component
-	public class ApplicationRunnerBean implements ApplicationRunner {
-	@Override
-	public void run(ApplicationArguments args) throws Exception {
-		String collectStr = Arrays.stream(args.getSourceArgs()).collect(Collectors.joining(","));
-		System.out.println(collectStr);
-	}
-
-	}
-https://www.concretepage.com/spring-boot/spring-boot-commandlinerunner-and-applicationrunner-example#:~:text=The%20difference%20between%20CommandLineRunner%20and,spring%20ApplicationArguments%20as%20an%20argument.&text=To%20execute%20them%20in%20an,Order%20annotation%20or%20Ordered%20interface.
-	Hello world:
-	-----------
 
 	
 	@RestController
@@ -265,14 +202,14 @@ https://www.concretepage.com/spring-boot/spring-boot-commandlinerunner-and-appli
 	public class Product {
 		private Integer id;
 		private String name;
-		private BigDecimal price;	
+		private int price;	
          }
 
 	
 	
 	@GetMapping("products/{id}")
 	public Book getProductById(@PathVariable(name = "id")int id) {
-		return new Product(id, "java basics book", new BigDecimal(300));
+		return new Product(id, "java basics book", 300);
 	}
 
 
@@ -285,19 +222,6 @@ https://www.concretepage.com/spring-boot/spring-boot-commandlinerunner-and-appli
 	server.port=8080
 
 
-
-Running spring boot :
-____________________
-
-	eclipse plugin
-	spring initilizer
-	spring cli
-
-	https://www.journaldev.com/8195/spring-boot-cli-setup-and-helloworld-example
-
-	spring init -n=jpa-one-to-one-demo -d=web,jpa,mysql --package-name=com.example.jpa demoproj
-
-
 bannner:
 ________________
 spring.banner.location=classpath:banner.txt
@@ -305,33 +229,11 @@ spring.banner.location=classpath:banner.txt
 https://devops.datenkollektiv.de/banner.txt/index.html
 
 
-
+How to run spring boot app with command line:
 java -jar  jpa_demo2-0.0.1-SNAPSHOT.jar --server.port=8050
 
-https://docs.spring.io/spring-boot/docs/1.1.2.RELEASE/reference/html/common-application-properties.html
 
-
-
-Note:Spring boot config: EnableAutoConfiguration
-________________________________________________
-
-disable all database related auto configuration in spring-boot
-__________________________________________________________
-
-@Configuration
-@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class,
- DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
-@Profile ("client_app_profile_name")
-public class ClientAppConfiguration {
-    //it can be left blank
-}
-
-
-
-
-Day 2: 
-
-session 1: spring boot rest crud application 
+session 3: spring boot rest crud application 
 ___________________________________________
 
 Rest 
@@ -342,6 +244,31 @@ Controller <------------ Service layer <---------- persistance layer <------ Ses
 
 step 1: application.properties
 _______________________
+
+in case of h2 database :
+---------------------
+server.port=8090
+server.servlet.context-path=/productapp
+spring.h2.console.enabled=true
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=password
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+# Custom H2 Console URL
+spring.h2.console.path=/h2
+
+spring.jpa.hibernate.ddl-auto=update
+
+logging.level.org.springframework.web: DEBUG
+logging.level.org.hibernate: ERROR
+
+spring.jpa.show-sql=true 
+
+
+
+in case of mysql database :
+---------------------
 server.servlet.context-path=/productapp
 server.port=8082
 
@@ -365,28 +292,6 @@ UserInterface.PRODUCT_DELETE_SUCCESS=product added successfully
 Service.PRODUCT_NOT_EXISTS=Product not exist
 
 
-in case of h2 database :
----------------------
-
-server.port=8090
-server.servlet.context-path=/productapp
-spring.h2.console.enabled=true
-spring.datasource.url=jdbc:h2:mem:testdb
-spring.datasource.driverClassName=org.h2.Driver
-spring.datasource.username=sa
-spring.datasource.password=password
-spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
-# Custom H2 Console URL
-spring.h2.console.path=/h2
-
-spring.jpa.hibernate.ddl-auto=update
-
-logging.level.org.springframework.web: DEBUG
-logging.level.org.hibernate: ERROR
-
-spring.jpa.show-sql=true 
-
-
 
 
 
@@ -403,7 +308,7 @@ public class Product {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	private BigDecimal price;
+	private int price;
 	public Product(String name, Double price) {
 		super();
 		this.name = name;
@@ -626,117 +531,9 @@ public class ExHandler {
 }
 
 
-Step 7: JSR 303 validateion api , exception handling
-__________________________________________________
-
-1. add validation api
-
-2. apply @valid in post and update method 
-
-3. 
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class ProductDto {
-
-	private int id;
-	
-	@NotNull(message = "{product.name.absent}")
-	@Pattern(regexp = "[A-Za-z]+( [A-Za-z]+)*", message = "{product.name.invalid}")
-	private String name;
-
-	@NotNull(message = "{product.price.absent}")
-	@Range(min = 100, max = 100000, message = "{product.price.invalid}")
-	private BigDecimal price;
-
-}
 
 
-4. create exception handler
-
-       @ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public Map<String, String> handleInvalidArgument(MethodArgumentNotValidException ex) {
-
-		Map<String, String> errorMap = new HashMap<>();
-		ex.getBindingResult().getFieldErrors().forEach(error -> {
-			errorMap.put(error.getField(), error.getDefaultMessage());
-		});
-		return errorMap;
-	}
-
-
-ValidationMessages.properties
------------------------------
-
-product.name.absent=Please provide product name
-product.name.invalid=product Name should contain only alphabets and space
-
-product.price.absent=Please provide product price 
-account.price.invalid=Please provide correct price bw 100 to 100000
-
-
-	Other validation example:
-	-------------------------
-
-	@Email(message = "{account.email.invalid}")
-	@NotNull(message = "{account.email.absent}")
-	private String email;
-	
-	@NotNull(message = "{account.phone.absent}")
-	@Pattern(regexp = "[789][0-9]{9}", message = "{account.phone.invalid}")
-	private String phone;
-
-
-
-	private String category;
-	
-		EL BOOKS FMCG
-	
-	
-Implementation of custom valiation logic:
--------------------------------------------
-
-
-setp 1: create ProductTypeValidator need to be used by custom annotation
-
-
-public class ProductTypeValidator implements ConstraintValidator<ValidateProductType, String> {
-    @Override
-    public boolean isValid(String productType, ConstraintValidatorContext constraintValidatorContext) {
-        List<String> productTypes = Arrays.asList("EL", "BOOK","FMCG);
-        return productTypes.contains(productType);
-    }
-}
-
-
-
-setp 2: create Custom annotation
-
-@Target({ElementType.FIELD,ElementType.PARAMETER})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Constraint(validatedBy = ProductTypeValidator.class)
-public @interface ValidateProductType {
-
-    public String message() default "Invalid productType: It should be either EL, BOOK,FMCG;
-
-    Class<?>[] groups() default {};
-
-    Class<? extends Payload>[] payload() default {};
-}
-
-
-
-//custom annotation
-    @ValidateProductType
-    private String productType; //Electronic or Books
-    
-
-    
-
-Supporting both xml and json:
+Step 7: Supporting both xml and json:
 	_______________________________
 
 	Step 1: put parser for xml
@@ -752,7 +549,11 @@ Supporting both xml and json:
 
 
 
-spring boot reading property files:
+Step 7:spring boot profile
+----------------------------
+
+
+Step 8: spring boot reading property files:
 ---------------------------------
 
 1. @Value annotation
@@ -766,37 +567,7 @@ spring boot reading property files:
 
 
 
-
-
-
-
-Spring boot loging customization:
-_____________________________________
-
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter</artifactId>
-    <exclusions>
-        <exclusion>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-logging</artifactId>
-        </exclusion>
-    </exclusions>
-</dependency>
-
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-log4j2</artifactId>
-</dependency>
-<dependency>
-    <groupId>org.apache.logging.log4j</groupId>
-    <artifactId>log4j-spring-boot</artifactId>
-</dependency>
-
-
-
-
-spring boot logging:
+Step 9: spring boot logging:
 -------------------
  	     
 Disable logging :
@@ -829,52 +600,8 @@ logging.file.name=/home/raj/Desktop/logs/server.log
 	     
  
 	     
-	     
-
-   
-
-
-
-richardson maturity model
-_________________________
-
-Step 8: hateoas: Hypermedia as the Engine of Application State (HATEOAS)
-__________________
-
- 1: put hateoas dependencies
-
- 2: enable static improt:
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
-
- 3: change POJO class:
-
-public class Product extends RepresentationModel<Product> {
-} 
-
-
-
-@GetMapping(path = "productsV2/{id}")
-	public EntityModel<Product>  findByIdLink(@PathVariable(name = "id") int id){
-		Link link=linkTo(methodOn(ProductController.class).findByIdLink(id)).withSelfRel();
-		Product product=productService.getById(id);
-		product.add(link);
-		return EntityModel.of(product);
-}
-
-@GetMapping(path = "productsV2")
-	public CollectionModel<Product> findAllV2(){
-		List<Product> products=productService.findAll();
-		for(Product product: products) {
-			Link link=linkTo(methodOn(ProductController.class).findByIdLink(product.getId())).withSelfRel();
-			product.add(link);
-		}
-		return CollectionModel.of(products);
-}
-
-
-
-9. Using OpenAPI 3.0
+	 
+step 10. Spring boot documentation Using OpenAPI 3.0
 _____________________
 https://www.baeldung.com/spring-rest-openapi-documentation
 
@@ -928,321 +655,9 @@ https://www.baeldung.com/spring-rest-openapi-documentation
 			)
 	)
 
-10. caching
-_____________
-1. In memory cache
--------------------
-
-step 1: configuration of cache
-
-@Configuration
-@EnableCaching
-public class CachingConfig {
-	@Bean
-	public CacheManager cacheManager(){
-		ConcurrentMapCacheManager cacheManager=new ConcurrentMapCacheManager("products");
-		return cacheManager;
-		
-	}
-}
 
 
-Step 2: applying cache annotations on service layer
-
-@Slf4j
-@Service
-@Transactional
-public class ProductServiceImpl implements ProductService {
-
-	
-	@Cacheable(value="products")
-	@Override
-	public List<Product> findAll() {
-		//
-	}
-
-	@Cacheable(value="products", key = "#id")
-	@Override
-	public Product getById(int id) {
-		//
-	}
-
-	@CachePut(value="products", key="#result.id")
-	@Override
-	public Product addProduct(Product product) {
-		//
-	}
-
-	@CachePut(value="products", key="#result.id")
-	@Override
-	public Product updateProduct(int id, Product product) {
-		//
-	}
-
-	@CacheEvict(value="products", key="#id")
-	@Override
-	public Product deleteProduct(int id) {
-		//
-	}
-
-	@CacheEvict(value="products", allEntries=true)
-	@Override
-	public void evictCache() {
-		log.info("cache is cleared...");
-	}
-
-}
-
-
-2. Cache using Ehcahce
----------------------------
-	Java’s most widely used cache
-	Open source
-	Commercial support by Terracota Inc.
-	it's robust, proven, full-featured, and integrates with other popular libraries and frameworks
-
-It can be used with hibernate as 
-	General purpose
-	2nd level cache
-	Integrates with – spring, google app engine and others
-
-Key terms
-----------
-Cache hit
-Cache miss
-System of record
-
-Why caching??
----------------
-	Locality of reference
-	Speed
-	Cost saving
-
-Factors that affect the efficiency of a cache
--------------------------------------------
-	Liveliness
-	Proportion of data cached
-	Shape of usage distribution – 80/20
-	Read/write ratio
-
-topology
------------
-	Standalone
-	Distributed
-	Replicated 
-
-Storage tiers
---------------
-Memory store – subject to GC
-offHeap store – available upto RAM
-Disk store 
-
-Configuration:
-----------------
-spring-boot-starter-cache
-spring-boot-starter-web
-spring-boot-starter-data-jpa
-'net.sf.ehcache', name: 'ehcache', version: '2.10.6'
-
-
-@Configuration
-public class EhcacheConfig {
-
-    @Bean
-    CacheManager cacheManager(){
-        return new EhCacheCacheManager(ehCacheManager());
-    }
-
-    private net.sf.ehcache.CacheManager ehCacheManager() {
-        EhCacheManagerFactoryBean factoryBean = new EhCacheManagerFactoryBean();
-        factoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
-        factoryBean.setShared(true);
-        return factoryBean.getObject();
-    }
-}
-
-ehcache.xml
-----------------
-<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="ehcache.xsd"
-         updateCheck="true"
-         monitoring="autodetect"
-         dynamicConfig="true"
-         diskPersistent="true">
-
-<!--    <diskStore path="java.io.tmpdir" />-->
-    <diskStore path="user.dir" />
-
-    <cache name="books"
-           maxEntriesLocalHeap="5"
-           maxEntriesLocalDisk="10"
-           eternal="false"
-           diskSpoolBufferSizeMB="20"
-           timeToIdleSeconds="3000"
-           timeToLiveSeconds="6000"
-           memoryStoreEvictionPolicy="LFU"
-           transactionalMode="off"
-
-           >
-        <persistence strategy="localTempSwap" />
-<!--        <persistence strategy="LOCALRESTARTABLE" />-->
-    </cache>
-
-</ehcache>
-
-
-redis introduction:
------------------
-What is redis?
-
-Redis means REmote DIctionary Server
-Open source
-Written in “ANSI C”
-In-memory data structure store
-Strings, Hashes, List, Set and Sorted set etc
-Built-in replication, LRU eviction, transactions, disk-level persistence
-
-https://www.javatpoint.com/redis-tutorial
-
-What is redis Usage ?
------------------
-	Database
-	Cache
-	Message broker
-	
-Can be used with different languages
-
-https://redis.io/clients
-
-https://github.com/tporadowski/redis/releases
-
-Redis as database?
-------------------
-redis.clients
-spring-boot-starter-data-redis
-
-@RedisHash("CustomersInfo")
-public class Customer implements Serializable {
-    @Id Integer id; 
-}
-
-@Configuration
-@EnableRedisRepositories
-public class RedisConfig {
-
-    @Bean
-    public JedisConnectionFactory connectionFactory(){
-        //host & port
-//        RedisStandaloneConfiguration configuration=new RedisStandaloneConfiguration();
-//        configuration.setHostName("localhost");
-//        configuration.setPort(6379);
-        return new JedisConnectionFactory();
-    }
-
-    @Bean
-    public RedisTemplate<Object,Object> template(){
-        RedisTemplate<Object,Object> template=new RedisTemplate<>();
-        template.setConnectionFactory(connectionFactory());
-        return template;
-    }
-}
-
-@Repository
-public class CustomerDAO {
-
-    @Autowired
-    private RedisTemplate template;
-
-   addCustomer
-        template.opsForHash().put("CustomersInfo", customer.getId(), customer);
-    getAllCustomers
-        return template.opsForHash().values("CustomersInfo");
-    
-  getCustomer(int id)
-        return (Customer) template.opsForHash().get("CustomersInfo", id);
-   
- deleteCustomer(int id) 
-        template.opsForHash().delete(HASH_KEY, id);
-   
-
-
-
-
-Redis as Cache?
-------------------
-spring-boot-starter-data-redis
-spring-boot-starter-web
-spring-boot-starter-data-jpa
-spring-boot-starter-data-jpa
-
-spring.redis.host=localhost
-spring.redis.port=6379
-spring.redis.timeout=10000
-spring.cache.type=REDIS
-spring.redis.cache-null-values=false
-spring.redis.use-key-prefix: true
-spring.redis.key-prefix: library
-spring.redis.time-to-live: 60000
-
-
-https://github.com/tporadowski/redis/releases
-6379
-set the env variable
-
-Step 11: schedule processes
-____________________________
-
-	Note:
-	The simple rules that we need to follow to annotate a method with @Scheduled are:
-
-			a method should have the void return type
-			a method should not accept any parameters
-
-	step 1: put @EnableScheduling on bootstrap class
-
-	step 2: create an component with @Scheduled annotation
-
-				
-		@Service
-		public class ScheduledJob {
-			private Logger logger = LoggerFactory.getLogger(ScheduledJob.class);
-		
-			@Autowired
-			private ProductService service;
-		
-			@Scheduled(cron = "0,30 * * * * *")
-			public void cronJob() {
-				logger.info("> cronJob");
-		
-				List<Product> products = service.findAll();
-				logger.info("There are {} products in the data store.", products.size());
-		
-				logger.info("< cronJob");
-			}
-		
-			// after application startup delay of 5 sec, schedule to run each after 15
-			
-			@Scheduled(initialDelay = 5000, fixedRate = 15000)
-			public void fixedRateJob() {
-				logger.info("> fixedRateJob");
-		
-				// Add scheduled logic here
-		
-				List<Product> products = service.findAll();
-				
-				logger.info("There are {} books in the data store.", products.size());
-		
-				logger.info("< fixedRateJob");
-			}
-		
-		}
-
-
-ref:
-https://www.baeldung.com/spring-scheduled-tasks
-https://www.tutorialspoint.com/unix_commands/crontab.htm
-
-Spring boot Actuator:
+Step 11: Spring boot Actuator:
 -------------------------
 
 server.port=8080
@@ -1278,138 +693,8 @@ public class CustomEndpoints {
 
 
 
-
-Step 12: web application with boot
-____________________________
-
-1. We need to put dependency:
-
-		<dependency>
-			<groupId>org.apache.tomcat.embed</groupId>
-			<artifactId>tomcat-embed-jasper</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-		</dependency>
-
-
-2. We need to configure view resolver
-
-spring.mvc.view.prefix:/WEB-INF/views/
-spring.mvc.view.suffix:.jsp
-
-
-3. define controller 
-
-@Controller
-public class ProductController {
-	
-	private ProductService productService;
-
-	@Autowired
-	public ProductController(ProductService productService) {
-		this.productService = productService;
-	}
-	
-	@GetMapping("products")
-	public ModelAndView allProducts(ModelAndView mv) {
-		mv.setViewName("products");
-		mv.addObject("products", productService.findAll());
-		
-		return mv;
-	}
-}
-
-put jsp in /bootapp/src/main/webapp/WEB-INF/views
-
-
-4. define jsp view 
-
-<table>
-	<thead>
-		<tr>
-			<th>product id</th>
-			<th>product name</th>
-			<th>product price</th>
-		</tr>
-	</thead>
-	<tbody>
-		<c:forEach items="${products}" var="product">
-			<tr>
-				<td>${product.id }</td>
-				<td>${product.name }</td>
-				<td>${product.price }</td>
-			</tr>
-		</c:forEach>
-	</tbody>
-</table>
-
-
-
 Step 11: deployment spring boot as war file to tomcat
-___________________________________________________
-
-
-
-Step 12: Spring boot mongodb integration:
-______________________________________________
-https://roytuts.com/installing-zip-version-of-mongodb-in-windows/
-
-RDBMS 	MongoDB
-______________
-
-Table 	<--->	Collection
-Column 	<--->	Key
-Value 	<--->	Value
-Records/Rows<--->Document/Object
-
-
-Creating collections, document, storing data etc:
-__________________________________________
-
-show dbs 		// List all databases
-use rajdb 		//Switches to inventory
-show collections  	//List all tables in the current selected database
-
-Creating collections, document, storing data etc
-__________________________________________
-
-	use rajdb;	// create as well switch to rajdb
-
-
-
-choose dependencies: web, devtools, mongo
-step 1: Dao layer
-____________________
-
-@Document(collection = "products")
-public class Product {
-    @Id
-    private String id;
-    private String name;
-    private BigDecimal price;
-    private String category;
-    
-}
-
-
-@Repository
-public interface ProductRepo extends MongoRepository<Product, Integer> {
-    public List<Product> findByName(String name);
-}
-
-
-step 5: application.properties
-___________________
-server.servlet.context-path=/empapp
-server.port=8080
-spring.data.mongodb.host=localhost
-spring.data.mongodb.port=27017
-spring.data.mongodb.database=mongodb
-spring.data.mongodb.repositories.enabled=true
-
+-------------------------------------------------------
 
 
 
