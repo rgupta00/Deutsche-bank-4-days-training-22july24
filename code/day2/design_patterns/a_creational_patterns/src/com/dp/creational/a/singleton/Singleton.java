@@ -14,19 +14,16 @@ import java.io.Serializable;
 	=> best practices, effective java
 	=> using enum
  */
-final public class Singleton implements Cloneable, Serializable {
+final public class Singleton implements Cloneable {
 
-	// Eager vs lazy loading
-	private volatile  static Singleton singleton = null;
-
-	private Singleton() {
-		if(singleton!=null) {
-			throw new IllegalStateException("object alreay exist");
-		}
-	}
-
-	// t1 t2
-	public static Singleton getSingleton() {
+	private volatile static Singleton singleton; //Eager vs Lazy
+	
+	//java reflection: it can break encapuslation?
+	//used to create the framework
+	private Singleton() {}
+	
+	//t1 t2
+	public  static Singleton getSingleton() {
 		if (singleton == null)
 			synchronized (Singleton.class) {
 				if(singleton==null)
@@ -36,15 +33,11 @@ final public class Singleton implements Cloneable, Serializable {
 	}
 
 	@Override
-	protected Singleton clone() throws CloneNotSupportedException {
-		return  singleton;
+	protected Object clone() throws CloneNotSupportedException {
+		throw new UnsupportedOperationException();
+		//return super.clone();
 	}
-
 	
-	private Object readResolve() {
-		System.out.println("it is called");
-		  return singleton;
-	}
 	
 }
 

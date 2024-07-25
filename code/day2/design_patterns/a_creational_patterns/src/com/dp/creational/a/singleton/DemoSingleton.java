@@ -17,14 +17,21 @@ public class DemoSingleton {
 		Singleton singleton=Singleton.getSingleton();
 		System.out.println(singleton.hashCode());
 		
-		//ser
-		ObjectOutputStream oos=new ObjectOutputStream(new FileOutputStream(new File("foo.ser")));
-		oos.writeObject(singleton);
 		
-		//de-ser
-		ObjectInputStream ois=new ObjectInputStream(new FileInputStream(new File("foo.ser")));
-		Singleton singleton2=(Singleton) ois.readObject();
+		Singleton singleton2=(Singleton) singleton.clone();
 		System.out.println(singleton2.hashCode());
+		
+//		Singleton singleton=Singleton.getSingleton();
+//		System.out.println(singleton.hashCode());
+//		
+//		//ser
+//		ObjectOutputStream oos=new ObjectOutputStream(new FileOutputStream(new File("foo.ser")));
+//		oos.writeObject(singleton);
+	
+//		//de-ser
+//		ObjectInputStream ois=new ObjectInputStream(new FileInputStream(new File("foo.ser")));
+//		Singleton singleton2=(Singleton) ois.readObject();
+//		System.out.println(singleton2.hashCode());
 		
 		//how to deal with reflection
 		

@@ -5,8 +5,9 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-//import com.productapp.config.AppConfig;
-import com.productapp.config.AppConfig2;
+import com.productapp.config.AppConfig;
+////import com.productapp.config.AppConfig;
+//import com.productapp.config.AppConfig2;
 import com.productapp.repo.Product;
 import com.productapp.repo.ProductDao;
 import com.productapp.repo.ProductDaoDsImpl;
@@ -34,10 +35,14 @@ public class Main {
 //		products.forEach(p-> System.out.println(p));
 		
 		//i will use spring container .
-		ApplicationContext ctx=new AnnotationConfigApplicationContext(AppConfig2.class);
-		ProductService productService=ctx.getBean("productService", ProductService.class);
-		List<Product> products = productService.getProducts();
-		products.forEach(p-> System.out.println(p));
+		ApplicationContext ctx=new AnnotationConfigApplicationContext(AppConfig.class);
+		ProductService productService1=ctx.getBean("productService", ProductService.class);
+		ProductService productService2=ctx.getBean("productService", ProductService.class);
+		System.out.println(productService1);
+		System.out.println(productService2);
+		
+//		List<Product> products = productService.getProducts();
+//		products.forEach(p-> System.out.println(p));
 	}
 
 }

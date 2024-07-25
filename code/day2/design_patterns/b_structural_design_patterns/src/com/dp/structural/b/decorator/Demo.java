@@ -49,7 +49,13 @@ public class Demo {
 
 	public static void main(String[] args) throws FileNotFoundException {
 	
+//		SimpleGreet greet2=new SimpleGreet();
+//		System.out.println(greet2.greet());
+		
+		
+		
 		Greet greet=new VerySpecialGreet(new SpecialGreet(new SimpleGreet()));
+		
 		
 		System.out.println(greet.greet());
 		

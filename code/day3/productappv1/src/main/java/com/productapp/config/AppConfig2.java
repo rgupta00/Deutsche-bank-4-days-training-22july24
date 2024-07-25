@@ -10,8 +10,8 @@ import com.productapp.repo.ProductDaoJdbcImpl;
 import com.productapp.service.ProductService;
 import com.productapp.service.ProductServiceImpl;
 
-@Configuration 
-@ComponentScan(basePackages = {"com.productapp.repo","com.productapp.service"})
-public class AppConfig2 {
-
-}
+//@Configuration 
+//@ComponentScan(basePackages = {"com.productapp.repo","com.productapp.service"})
+//public class AppConfig2 {
+//
+//}
