@@ -31,6 +31,15 @@ class MergeSortSorting implements Sortable{
 	}
 	
 }
+class RadixSortSorting implements Sortable{
+
+	@Override
+	public int[] sort(int[] arr) {
+		System.out.println("using radix sort");
+		return null;
+	}
+	
+}
 //OCP
 
 class MathsAlgo{
@@ -59,7 +68,7 @@ public class DemoStrategyPattern {
 	
 	public static void main(String[] args) {
 		MathsAlgo algo=new MathsAlgo();
-		algo.setSortable(new QuickSortSorting());
+		algo.setSortable(new RadixSortSorting());
 		algo.sort();
 	}
 

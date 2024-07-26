@@ -4,7 +4,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		MySubject subject=new MySubject("Amdoc", 55);
-
+		
 		MyObserver o=new MyObserver();
 //		
 		subject.addObserver(o);

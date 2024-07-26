@@ -47,7 +47,18 @@ public class java.lang.Object {
 
 
 GC
-
+Top 10 Java books
+------------------
+Head first core java
+Head first design pattern
+Head first OOAD
+java 8 in action
+java interview companion arulkumaran
+effective java
+clean code
+scjp kathy sierra
+data structure and algorithms in java by robert lafore 
+Designing Data-Intensive Applications
 
 Deep Dive design pattern with java
 -----------------------------------
@@ -1957,10 +1968,13 @@ http://www.journaldev.com/1730/mediator-design-pattern-java
 Strategy Pattern 
 ================
 	
+https://softwareengineering.stackexchange.com/questions/347505/how-to-design-the-classes-for-a-simple-shopping-cart-example-using-strategy-desi
 
 Strategy Pattern
 -----------------
-	=>The strategy pattern is intended to provide a means to define a family of algorithms,    		encapsulate each one as an object, and make them interchangeable select algo at run time 		convert IS-A to HAS-A
+	=>The strategy pattern is intended to provide a means to define a family of algorithms,    		
+	encapsulate each one as an object, and make them interchangeable select algo at run time 		
+	convert IS-A to HAS-A
 
 	=> It separate algorithms into classes that can be plugged in at runtime.
  

@@ -1332,6 +1332,10 @@ jacoco plugin:
 
 sonarcube with spring boot:
 ===========================
+https://medium.com/@truongbui95/jacoco-code-coverage-with-spring-boot-835af8debc68
+
+https://blog.stackademic.com/integratation-of-sonarqube-with-springboot-6d2cebd4ef95
+
 sonarcube 9.9.4 lts
 https://www.sonarsource.com/products/sonarqube/downloads/
 
